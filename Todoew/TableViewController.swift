@@ -12,11 +12,15 @@ class TableViewController: UITableViewController {
     
     var itemArray = ["milk","egg","butter"]
     
+    let defaults = UserDefaults.standard
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        if let item = defaults.array(forKey: "TodoList") as? [String]{
+            itemArray = item
+        }
     }
 
     // MARK: - Table view data source
@@ -66,6 +70,7 @@ class TableViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen the once user clicks the add item buttom on our uiAlert
             self.itemArray.append(textFiled.text!)
+            self .defaults.set(self.itemArray, forKey: "TodoList")
             self.tableView.reloadData()
         }
         
